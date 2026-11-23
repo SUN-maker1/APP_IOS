@@ -5,7 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch: # 支持手动点击打包
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,8 +17,13 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.2' # 👉这里改成你本地flutter --version的版本
+          flutter-version: '3.16.2' # 改成你flutter --version的版本
           channel: 'stable'
+
+      - name: Use RubyGems mirror & install pod
+        run: |
+          gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
+          gem install cocoapods
 
       - name: Install dependencies
         run: |
